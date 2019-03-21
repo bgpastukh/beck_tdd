@@ -13,7 +13,7 @@ abstract class Money implements Expression
     /**
      * @var int
      */
-    public $amount;
+    protected $amount;
 
     /**
      * @var string
@@ -108,5 +108,13 @@ abstract class Money implements Expression
     {
         $rate = $bank->rate($this->currency, $to);
         return self::createFromCurrency($this->amount / $rate, $to);
+    }
+
+    /**
+     * @return int
+     */
+    public function amount(): int
+    {
+        return $this->amount;
     }
 }

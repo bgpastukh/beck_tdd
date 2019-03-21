@@ -8,12 +8,12 @@ namespace App;
  * Class Money
  * @package App
  */
-abstract class Money
+abstract class Money implements Expression
 {
     /**
      * @var int
      */
-    protected $amount;
+    public $amount;
 
     /**
      * @var string
@@ -30,6 +30,17 @@ abstract class Money
         $this->amount = $amount;
         $this->currency = $currency;
     }
+
+    public static function createFromCurrency(int $amount, string $currency): Money
+    {
+        switch ($currency) {
+            case 'USD':
+                return self::dollar($amount);
+            case 'CHF':
+                return self::franc($amount);
+        }
+    }
+
 
     /**
      * @param int $amount
@@ -81,10 +92,10 @@ abstract class Money
 
     /**
      * @param Money $addend
-     * @return Money
+     * @return Expression
      */
-    public function plus(Money $addend): Money
+    public function plus(Money $addend): Expression
     {
-        return new $this($this->amount + $addend->amount, $this->currency);
+        return new Sum($this, $addend);
     }
 }

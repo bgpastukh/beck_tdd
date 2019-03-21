@@ -2,7 +2,9 @@
 
 namespace App\Tests;
 
+use App\Bank;
 use App\Money;
+use App\Sum;
 
 /**
  * Class MoneyTest
@@ -34,7 +36,28 @@ class MoneyTest extends \PHPUnit\Framework\TestCase
 
     public function testSimpleAddition(): void
     {
-        $sum = Money::dollar(5)->plus(Money::dollar(5));
-        $this->assertEquals(Money::dollar(10), $sum);
+        $five = Money::dollar(5);
+        $sum = $five->plus($five);
+        $bank = new Bank();
+        $reduced = $bank->reduce($sum, 'USD');
+        $this->assertEquals(Money::dollar(10), $reduced);
+    }
+
+    public function testPlusReturnsSum(): void
+    {
+        $five = Money::dollar(5);
+        /** @var Sum $result */
+        $result = $five->plus($five);
+
+        $this->assertEquals($five, $result->augend);
+        $this->assertEquals($five, $result->addend);
+    }
+
+    public function testReduceSum(): void
+    {
+        $sum = new Sum(Money::dollar(3), Money::dollar(4));
+        $bank = new Bank();
+        $result = $bank->reduce($sum, 'USD');
+        $this->assertEquals(Money::dollar(7), $result);
     }
 }

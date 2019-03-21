@@ -62,9 +62,9 @@ abstract class Money implements Expression
 
     /**
      * @param int $multiplier
-     * @return Money
+     * @return Expression
      */
-    public function times(int $multiplier): Money
+    public function times(int $multiplier): Expression
     {
         return new $this($this->amount * $multiplier, $this->currency);
     }
@@ -91,10 +91,10 @@ abstract class Money implements Expression
     }
 
     /**
-     * @param Money $addend
+     * @param Expression $addend
      * @return Expression
      */
-    public function plus(Money $addend): Expression
+    public function plus(Expression $addend): Expression
     {
         return new Sum($this, $addend);
     }

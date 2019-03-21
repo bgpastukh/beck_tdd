@@ -60,4 +60,11 @@ class MoneyTest extends \PHPUnit\Framework\TestCase
         $result = $bank->reduce($sum, 'USD');
         $this->assertEquals(Money::dollar(7), $result);
     }
+
+    public function testReduceMoney(): void
+    {
+        $bank = new Bank();
+        $result = $bank->reduce(Money::dollar(1), 'USD');
+        $this->assertEquals(Money::dollar(1), $result);
+    }
 }

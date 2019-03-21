@@ -98,4 +98,13 @@ abstract class Money implements Expression
     {
         return new Sum($this, $addend);
     }
+
+    /**
+     * @param string $to
+     * @return Money
+     */
+    public function reduce(string $to): Money
+    {
+        return $this;
+    }
 }

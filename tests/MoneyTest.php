@@ -3,6 +3,8 @@
 namespace App\Tests;
 
 use App\Bank;
+use App\Dollar;
+use App\Franc;
 use App\Money;
 use App\Sum;
 
@@ -111,5 +113,20 @@ class MoneyTest extends \PHPUnit\Framework\TestCase
         $sum = (new Sum($fiveBucks, $tenFrancs))->times(2);
         $result = $bank->reduce($sum, 'USD');
         $this->assertEquals(Money::dollar(20), $result);
+    }
+
+    public function testCreatesFromCurrency(): void
+    {
+        $fiveBucks = Money::createFromCurrency(5, 'USD');
+        $this->assertInstanceOf(Dollar::class, $fiveBucks);
+
+        $fiveFrancs = Money::createFromCurrency(5, 'CHF');
+        $this->assertInstanceOf(Franc::class, $fiveFrancs);
+    }
+
+    public function testFailesIfUnknownCurrency(): void
+    {
+        $this->expectException(\Exception::class);
+        $fiveDucats = Money::createFromCurrency(5, 'DUK');
     }
 }

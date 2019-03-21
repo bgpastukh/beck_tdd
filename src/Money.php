@@ -39,6 +39,8 @@ abstract class Money implements Expression
             case 'CHF':
                 return self::franc($amount);
         }
+
+        throw new \Exception('Unknown currency');
     }
 
 

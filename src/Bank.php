@@ -47,6 +47,10 @@ class Bank
      */
     public function rate(string $from, string $to): int
     {
+        if ($from === $to) {
+            return 1;
+        }
+
         return $this->rates->get(new Pair($from, $to));
     }
 }

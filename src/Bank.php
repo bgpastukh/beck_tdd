@@ -3,6 +3,8 @@
 
 namespace App;
 
+use Ds\Map;
+
 
 /**
  * Class Bank
@@ -10,6 +12,14 @@ namespace App;
  */
 class Bank
 {
+    /** @var Map */
+    private $rates;
+
+    public function __construct()
+    {
+        $this->rates = new Map();
+    }
+
     /**
      * @param Expression $source
      * @param string $to
@@ -21,13 +31,13 @@ class Bank
     }
 
     /**
-     * @param string $a
-     * @param string $b
-     * @param int $amount
+     * @param string $from
+     * @param string $to
+     * @param int $rate
      */
-    public function addRate(string $a, string $b, int $amount): void
+    public function addRate(string $from, string $to, int $rate): void
     {
-
+        $this->rates->put(new Pair($from, $to), $rate);
     }
 
     /**
@@ -37,6 +47,6 @@ class Bank
      */
     public function rate(string $from, string $to): int
     {
-        return ($from === 'CHF' && $to === 'USD') ? 2 : 1;
+        return $this->rates->get(new Pair($from, $to));
     }
 }

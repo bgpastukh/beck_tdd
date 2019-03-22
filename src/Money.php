@@ -31,6 +31,12 @@ abstract class Money implements Expression
         $this->currency = $currency;
     }
 
+    /**
+     * @param int $amount
+     * @param string $currency
+     * @return Money
+     * @throws \Exception
+     */
     public static function createFromCurrency(int $amount, string $currency): Money
     {
         switch ($currency) {
@@ -105,6 +111,7 @@ abstract class Money implements Expression
      * @param Bank $bank
      * @param string $to
      * @return Money
+     * @throws \Exception
      */
     public function reduce(Bank $bank, string $to): Money
     {
